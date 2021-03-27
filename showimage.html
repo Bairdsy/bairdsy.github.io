@@ -55,12 +55,13 @@ limitations under the License.
        if (event.data.rowCount==1 && event && event.data)
        {
             document.getElementById("myText").src = event.data.data[0][0];//process event.data
-	    d3.select("body").append("span").text(event.data/data[0][0]);
+	    document.select("body").append("span").text("one row");
        }
  	else {
       		 if (event && event.data && event.data.rowCount>1)
       		{
           		 document.getElementById("myText").src="";
+			 document.select("body").append("span").text("multiple rows");
      		 }	
             } 
    }
@@ -69,7 +70,7 @@ limitations under the License.
 
 
 
-<img style="height:335px;width:600px" id="myText" src="https://i.ibb.co/qW4kFbd/ezgif-frame-063.jpg" /> 
+<img style="height:335px;width:600px" id="myText" src="https://i.ibb.co/qW4kFbd/ezgif-frame-001.jpg" /> 
 
 </body>
 </html>
