@@ -1,0 +1,46 @@
+<html>
+<head>
+    <script type="text/javascript" src="../util/messagingUtil.js"></script>
+    <style>
+        html, body {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+            height: 100%;
+            width: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+	some text
+<div>
+	<iframe id="target_url" src=""></iframe>
+</div>
+
+<script>
+    "use strict";
+
+    va.messagingUtil.setOnDataReceivedCallback(updateURL);
+
+	function updateURL(vaMsgObj)
+	{
+		if (vaMsgObj && vaMsgObj.data && vaMsgObj.rowCount === 1) {
+			document.getElementById("target_url").src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAVdBjaSSmEVK8OqifCC5v4_TdCfpUihKU&location="+vaMsgObj.data[0][0]+","+vaMsgObj.data[0][1];
+		}
+		else {
+			document.getElementById("target_url").src="";
+		}
+	}
+</script>
+
+</body>
+</html>
