@@ -1,6 +1,13 @@
 <html>
 <head>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.min.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="../util/messagingUtil.js"></script>
+    <script type="text/javascript" src="../util/contentUtil.js"></script>
+    <script type="text/javascript" src="../thirdPartyHelpers/d3.js"></script>
+    <script type="text/javascript" src="../thirdPartyHelpers/c3.js"></script>
+	
     <style>
         html, body {
             margin: 0px;
@@ -21,20 +28,27 @@
     </style>
 </head>
 <body>
-	some text
 <div>
-	<iframe id="target_url" src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAVdBjaSSmEVK8OqifCC5v4_TdCfpUihKU&location=-33.8,151.1"></iframe>
+	<iframe id="target_url" src=""></iframe>
 </div>
 
 <script>
-    "use strict";
-
+	if (window.addEventListener) 
+	{
+	       // For standards-compliant web browsers
+       		window.addEventListener("message", updateURL, false);
+   	} 
+	else 
+	{
+       		window.attachEvent("onmessage", updateURL);
+   	}
+	
     va.messagingUtil.setOnDataReceivedCallback(updateURL);
 
 	function updateURL(vaMsgObj)
 	{
 		if (vaMsgObj && vaMsgObj.data && vaMsgObj.rowCount === 1) {
-			document.getElementById("target_url").src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAVdBjaSSmEVK8OqifCC5v4_TdCfpUihKU&location=-33.8,151.1";
+			document.getElementById("target_url").src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAVdBjaSSmEVK8OqifCC5v4_TdCfpUihKU&location="+event.data.data[0][0]+",151.1";
 		}
 		else {
 			document.getElementById("target_url").src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAVdBjaSSmEVK8OqifCC5v4_TdCfpUihKU&location=-33.8,151.1";
