@@ -1,58 +1,55 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.min.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="../util/messagingUtil.js"></script>
     <script type="text/javascript" src="../util/contentUtil.js"></script>
-    <script type="text/javascript" src="../thirdPartyHelpers/google.js"></script>
-
+    <script type="text/javascript" src="../thirdPartyHelpers/d3.js"></script>
+    <script type="text/javascript" src="../thirdPartyHelpers/c3.js"></script>
+	
     <style>
-        html {
+        html, body {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
             overflow: hidden;
         }
-        html, body, #chart_div {
-            width: 100%;
+        iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
             height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        #chart_div {
-            position: relative;
+            width: 100%;
+            border: none;
         }
     </style>
-
-    <script>
-        "use strict";
-
-        va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
-
-        var _resultName = null;
-        var _dataTable = null;
-        var _selections = null;
-        var _calendar = null;
-        var _options = {        };
-
-		const _position = { lat: 42.345573, lng: -71.098326 };
-		const map = new google.maps.Map(document.getElementById("map"), {
-				center: _position,
-				zoom: 14,
-				});
-        _panorama = new google.mapsStreetViewPanorama(document.getElementById("pano"), 
-		{
-			position: _position,
-			pov: {
-				heading: 34,
-				pitch: 10,
-			},
-		}	);
-
-		map.setStreetView(panorama);
-
-
-
-    </script>
 </head>
 <body>
-<div id="chart_div"/>
+<div>
+	<iframe id="target_url" src=""></iframe>
+</div>
+
+<script>
+	if (window.addEventListener) 
+	{
+	       // For standards-compliant web browsers
+       		window.addEventListener("message", updateURL, false);
+   	} 
+	else 
+	{
+       		window.attachEvent("onmessage", updateURL);
+   	}
+	
+    va.messagingUtil.setOnDataReceivedCallback(updateURL);
+
+	function updateURL(vaMsgObj)
+	{
+		document.getElementById("target_url").src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyAVdBjaSSmEVK8OqifCC5v4_TdCfpUihKU&location="+event.data.data[0][0]+","+event.data.data[0][1];	
+	}
+</script>
+
 </body>
 </html>
